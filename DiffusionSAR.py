@@ -2,7 +2,7 @@
 Part 1 - SAR image despeckling with DiffusionSAR vs. a classical boxcar filter.
 
 Run:   python DiffusionSAR.py
-       python DiffusionSAR.py --boxcar 7 --grid_r 32
+       python DiffusionSAR.py --boxcar 7 --grid_r 16
 
 Pipeline (DiffusionSAR):
   0. Amplitude -> intensity (A^2); the model was trained on single-look intensity speckle
@@ -206,8 +206,8 @@ def main():
     ap.add_argument("--model", default=os.path.join(HERE, "model", "DiffusionSAR_pretrained.pth"))
     ap.add_argument("--boxcar", type=int, default=5, help="boxcar window size")
     ap.add_argument("--steps", type=int, default=25, help="DDIM sampling steps")
-    ap.add_argument("--grid_r", type=int, default=64,
-                    help="stride between overlapping 128x128 patches (16 = finest, ~16x slower; 64 = fast)")
+    ap.add_argument("--grid_r", type=int, default=32,
+                    help="stride between overlapping 128x128 patches (default 32; 16 = finest but slower; 64 = faster)")
     ap.add_argument("--out", default=os.path.join(HERE, "results"))
     ap.add_argument("--seed", type=int, default=61)
     args = ap.parse_args()

@@ -13,8 +13,8 @@ pre-trained **DiffusionSAR** model and comparing it with a classical **boxcar fi
 
 The image, the pre-trained model and the code are downloaded automatically from the
 [release](https://github.com/dearest-D/SAR-DL-Practical/releases/tag/v1.0) (~170 MB).
-After about 1–2 minutes the original image, the boxcar result and the DiffusionSAR result are
-shown side by side. Without a GPU the notebook still works, but takes ~10–15 minutes.
+After about 2–4 minutes the original image, the boxcar result and the DiffusionSAR result are
+shown side by side. Without a GPU the notebook still works, but takes ~30–45 minutes.
 
 ## Run on your own computer
 
@@ -23,11 +23,11 @@ Download and extract [Part1_Denoising.zip](https://github.com/dearest-D/SAR-DL-P
 ```bash
 cd Part1_Denoising
 pip install -r requirements.txt
-python DiffusionSAR.py          # options: --boxcar 7  --grid_r 16  --steps 25
+python DiffusionSAR.py          # options: --boxcar 7  --grid_r 16  --steps 25   (default grid_r 32)
 ```
 
 The script uses an NVIDIA GPU automatically if available (CUDA version of PyTorch), otherwise the CPU.
-Running time: about 30–60 s on a GPU, about 10–20 min on a CPU.
+Running time: about 2–4 min on a GPU, about 30–60 min on a CPU.
 
 ## Files
 
