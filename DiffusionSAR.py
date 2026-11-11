@@ -27,6 +27,16 @@ from types import SimpleNamespace
 import numpy as np
 import tifffile
 import torch
+import matplotlib
+if "interagg" in os.environ.get("MPLBACKEND", ""):
+    # PyCharm's plot viewer (SciView) of older PyCharm versions does not work with
+    # matplotlib >= 3.10 -> show the figure in a normal window instead
+    try:
+        import tkinter
+        tkinter.Tk().destroy()          # check that a window can be opened
+        matplotlib.use("TkAgg")
+    except Exception:
+        matplotlib.use("Agg")           # no window: results are only saved to files
 import matplotlib.pyplot as plt
 from scipy import stats
 from scipy.ndimage import uniform_filter
@@ -205,7 +215,7 @@ def main():
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    stride = args.grid_r
+    stride = max(1, min(args.grid_r, 128))      # patches must overlap or touch (patch size 128)
 
     amp = tifffile.imread(args.image).astype(np.float32)
     print(f"Image: {args.image}  shape={amp.shape}")
@@ -216,8 +226,17 @@ def main():
 
     print("DiffusionSAR:")
     t0 = time.time()
-    model, config = load_model(args.model, device)
-    dif = despeckle_diffusionsar(amp, model, config, device, args.steps, stride)
+    try:
+        model, config = load_model(args.model, device)
+        dif = despeckle_diffusionsar(amp, model, config, device, args.steps, stride)
+    except torch.cuda.OutOfMemoryError:
+        print("\nNot enough GPU memory -> switching to the CPU (this takes longer).")
+        model = None
+        torch.cuda.empty_cache()
+        np.random.seed(args.seed)
+        device = torch.device("cpu")
+        model, config = load_model(args.model, device)
+        dif = despeckle_diffusionsar(amp, model, config, device, args.steps, stride)
     print(f"DiffusionSAR: {time.time() - t0:.1f} s")
 
     os.makedirs(args.out, exist_ok=True)
@@ -241,7 +260,15 @@ def main():
     plt.tight_layout()
     fig.savefig(os.path.join(args.out, "comparison.png"), dpi=150)
     print(f"Results saved to {args.out}")
-    plt.show()
+    png = os.path.join(args.out, "comparison.png")
+    if matplotlib.get_backend().lower() == "agg":
+        print(f"No figure window available - please open {png} to see the results.")
+        return
+    try:
+        plt.show()
+    except Exception as err:
+        print(f"Could not open a figure window ({type(err).__name__}: {err}).")
+        print(f"Please open {png} to see the results.")
 
 
 if __name__ == "__main__":
