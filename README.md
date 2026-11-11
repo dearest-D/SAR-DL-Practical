@@ -13,7 +13,7 @@ pre-trained **DiffusionSAR** model and comparing it with a classical **boxcar fi
 
 The image, the pre-trained model and the code are downloaded automatically from the
 [release](https://github.com/dearest-D/SAR-DL-Practical/releases/tag/v1.0) (~170 MB).
-After about one minute the original image, the boxcar result and the DiffusionSAR result are
+After about 1–2 minutes the original image, the boxcar result and the DiffusionSAR result are
 shown side by side. Without a GPU the notebook still works, but takes ~10–15 minutes.
 
 ## Run on your own computer
@@ -26,6 +26,9 @@ pip install -r requirements.txt
 python DiffusionSAR.py          # options: --boxcar 7  --grid_r 16  --steps 25
 ```
 
+The script uses an NVIDIA GPU automatically if available (CUDA version of PyTorch), otherwise the CPU.
+Running time: about 30–60 s on a GPU, about 10–20 min on a CPU.
+
 ## Files
 
 | File | Content |
@@ -33,7 +36,7 @@ python DiffusionSAR.py          # options: --boxcar 7  --grid_r 16  --steps 25
 | `DiffusionSAR.ipynb` | Colab notebook |
 | `DiffusionSAR.py` | boxcar filter + DiffusionSAR despeckling, side-by-side display |
 | `diffusionsar_unet.py` | DiffusionSAR network (conditional U-Net with residual and attention blocks) |
-| Release `Part1_Denoising.zip` | the files above + `NISAR_HH_amplitude.tif` (512 × 512) + pre-trained weights |
+| Release `Part1_Denoising.zip` | `DiffusionSAR.py`, `diffusionsar_unet.py`, `requirements.txt`, `NISAR_HH_amplitude.tif` (512 × 512) and the pre-trained weights |
 
 ## Reference
 
