@@ -1,4 +1,4 @@
-# DiffusionSAR – SAR Image Despeckling (course exercise)
+# SAR Image Despeckling (course exercise)
 
 Part 1 of the practical exercise *DL Meets SAR*: despeckling a NISAR HH amplitude image with the
 pre-trained **DiffusionSAR** model and comparing it with a classical **boxcar filter**.
