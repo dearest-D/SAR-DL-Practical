@@ -5,20 +5,20 @@ pre-trained **DiffusionSAR** model and comparing it with a classical **boxcar fi
 
 ## Run in Google Colab (nothing to install)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dearest-D/DiffusionSAR-course/blob/main/DiffusionSAR.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dearest-D/SAR-DL-Practical/blob/main/DiffusionSAR.ipynb)
 
 1. Click the **Open in Colab** button above (sign in with a Google account).
 2. *Runtime → Change runtime type →* **T4 GPU** → *Save*.
 3. *Runtime → Run all*.
 
 The image, the pre-trained model and the code are downloaded automatically from the
-[release](https://github.com/dearest-D/DiffusionSAR-course/releases/tag/v1.0) (~170 MB).
+[release](https://github.com/dearest-D/SAR-DL-Practical/releases/tag/v1.0) (~170 MB).
 After about one minute the original image, the boxcar result and the DiffusionSAR result are
 shown side by side. Without a GPU the notebook still works, but takes ~10–15 minutes.
 
 ## Run on your own computer
 
-Download and extract [Part1_Denoising.zip](https://github.com/dearest-D/DiffusionSAR-course/releases/download/v1.0/Part1_Denoising.zip), then
+Download and extract [Part1_Denoising.zip](https://github.com/dearest-D/SAR-DL-Practical/releases/download/v1.0/Part1_Denoising.zip), then
 
 ```bash
 cd Part1_Denoising
